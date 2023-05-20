@@ -79,7 +79,7 @@ In the main class
 
 ### Documentation
 
-You can check the API documentation [here](https://augustoravazoli.github.io/bankapi/index.html).
+You can check the API documentation [here](https://augustoravazoli.github.io/termenu/apidocs).
 
 ## License
 
