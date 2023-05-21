@@ -18,13 +18,13 @@ public @interface Option {
 
   /**
    * The number readed from keyboard to map this option
-   * @return {}
+   * @return number to map to keyboard
    */
   int number();
 
   /**
    * The option name to be displayed in the menu
-   * @return {}
+   * @return name of this option
    */
   String name();
 

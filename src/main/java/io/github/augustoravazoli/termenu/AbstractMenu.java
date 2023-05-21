@@ -14,10 +14,21 @@ import java.util.Scanner;
  */
 public abstract class AbstractMenu {
 
+  private static final Scanner DEFAULT_INPUT = new Scanner(System.in);
+  private static final PrintStream DEFAULT_OUTPUT = System.out;
+
   private final Scanner input;
   private final PrintStream output;
   private final List<Method> actions;
   private boolean exited;
+
+  /**
+   * Constructs an abstract menu
+   * @throws IllegalStateException if {@link io.github.augustoravazoli.termenu.Header} annotation is missing
+   */
+  protected AbstractMenu() {
+    this(DEFAULT_INPUT, DEFAULT_OUTPUT);
+  }
 
   AbstractMenu(Scanner input, PrintStream output) {
     if (!getClass().isAnnotationPresent(Header.class)) {
@@ -38,14 +49,6 @@ public abstract class AbstractMenu {
         m2.getAnnotation(Option.class).number()
       ))
       .toList();
-  }
-
-  /**
-   * Constructs an abstract menu
-   * @throws IllegalStateException if {@link io.github.augustoravazoli.termenu.Header} annotation is missing
-   */
-  protected AbstractMenu() {
-    this(new Scanner(System.in), System.out);
   }
 
   /**

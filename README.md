@@ -39,7 +39,7 @@ Add the dependency to your `pom.xml` file
   <dependency>
     <groupId>io.github.augustoravazoli.termenu</groupId>
     <artifactId>termenu</artifactId>
-    <version>1.0.0</version>
+    <version>1.0.1</version>
   </dependency>
 ```
 
