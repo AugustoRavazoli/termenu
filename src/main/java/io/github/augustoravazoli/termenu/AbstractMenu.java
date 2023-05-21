@@ -11,6 +11,7 @@ import java.util.Scanner;
  * A menu should extend this class to work through the {@link #run() Run} method. 
  * This class also provides utilities methods to perform terminal I/O.
  * @author Augusto Ravazoli
+ * @since 1.0.0
  */
 public abstract class AbstractMenu {
 
@@ -19,6 +20,7 @@ public abstract class AbstractMenu {
 
   private final Scanner input;
   private final PrintStream output;
+  private final Header header;
   private final List<Method> actions;
   private boolean exited;
 
@@ -36,6 +38,7 @@ public abstract class AbstractMenu {
     }
     this.input = input;
     this.output = output;
+    this.header = getClass().getAnnotation(Header.class);
     this.actions = getActions();
   }
 
@@ -55,6 +58,7 @@ public abstract class AbstractMenu {
    * Starts the menu and waits for keyboard input to execute an option
    */
   public final void run() {
+    exited = false;
     while (!exited) {
       listOptions();
       chooseOption();
@@ -62,14 +66,15 @@ public abstract class AbstractMenu {
   }
 
   private void listOptions() {
-    output.println(getClass().getAnnotation(Header.class).title());
+    output.println(header.title());
     for (var action : actions) {
       var option = action.getAnnotation(Option.class);
-      output.printf("%d - %s\n", option.number(), option.name());
+      output.printf(header.format(), option.number(), option.name());
     }
   }
 
   private void chooseOption() {
+    checkInt();
     var choice = input.nextInt();
     actions
       .stream()
@@ -77,7 +82,7 @@ public abstract class AbstractMenu {
       .findFirst()
       .ifPresentOrElse(
         action -> invoke(action),
-        () -> output.println(getClass().getAnnotation(Header.class).errorMessage())
+        () -> output.println(header.invalidOptionErrorMessage())
       );
   }
 
@@ -90,7 +95,7 @@ public abstract class AbstractMenu {
   }
 
   /**
-   * An action to exit the menu
+   * The action to exit this menu
    */
   protected void exit() {
     exited = true;
@@ -106,7 +111,7 @@ public abstract class AbstractMenu {
 
   /**
    * A helper method to display a formated message
-   * @param format - the the format
+   * @param format - the format
    * @param args - the objects
    */
   protected void printf(String format, Object... args) {
@@ -114,29 +119,45 @@ public abstract class AbstractMenu {
   }
 
   /**
-   * A helper method to display a message and return an integer from the keyboard
+   * A helper method to display a message and return an integer from keyboard
    * @param message - the message to display
-   * @return the integer readed from the keyboard
+   * @return an integer
    */
   protected int askForInt(String message) {
     output.print(message);
+    checkInt();
     return input.nextInt();
   }
 
+  private void checkInt() {
+    while (!input.hasNextInt()) {
+      output.println(header.invalidIntErrorMessage());
+      input.next();
+    }
+  }
+
   /**
-   * A helper method to display a message and return a double from the keyboard
+   * A helper method to display a message and return a double from keyboard
    * @param message - the message to display
-   * @return the double readed from the keyboard
+   * @return a double
    */
   protected double askForDouble(String message) {
     output.print(message);
+    checkDouble();
     return input.nextDouble();
+  }
+
+  private void checkDouble() {
+    while (!input.hasNextDouble()) {
+      output.println(header.invalidDoubleErrorMessage());
+      input.next();
+    }
   }
 
   /**
    * A helper method to display a message and return a string from the keyboard
    * @param message - the message to display
-   * @return the string readed from the keyboard
+   * @return a string
    */
   protected String askForWord(String message) {
     output.print(message);
@@ -146,7 +167,7 @@ public abstract class AbstractMenu {
   /**
    * A helper method to display a message and return a string line from the keyboard
    * @param message - the message to display
-   * @return the string line readed from the keyboard
+   * @return a line
    */
   protected String askForPhrase(String message) {
     output.print(message);

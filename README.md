@@ -1,6 +1,6 @@
 # Termenu
 
-A simple library to develop interactive menus in terminal.
+A simple library to develop interactive menus on terminal using Java.
 
 ## Getting Started
 
@@ -39,7 +39,7 @@ Add the dependency to your `pom.xml` file
   <dependency>
     <groupId>io.github.augustoravazoli.termenu</groupId>
     <artifactId>termenu</artifactId>
-    <version>1.0.1</version>
+    <version>1.1.0</version>
   </dependency>
 ```
 
@@ -56,7 +56,7 @@ Create a class exteding `AbstractMenu` and mark it with `Header` and `Option` an
       printf("Greetings %s\n", name);
     }
 
-    @Option(number = 2, name = "Exit") // Use the inherited exit action to exit this menu
+    @Option(number = 2, name = "Exit") // Use the inherited exit method to exit this menu
     @Override
     protected void exit() {
       super.exit();
@@ -75,6 +75,22 @@ In the main class
     }
 
   }
+```
+
+The terminal output
+```bash
+  Menu
+  1 - Greetings
+  2 - Exit
+  1 # readed from keyboard
+  What's your name?
+  Joe # readed from keyboard
+  Greetings Joe
+  Menu
+  1 - Greetings
+  2 - Exit
+  2 # readed from keyboard
+  Exiting...
 ```
 
 ### Documentation

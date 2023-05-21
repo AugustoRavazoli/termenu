@@ -6,7 +6,7 @@
 
   <groupId>io.github.augustoravazoli.termenu</groupId>
   <artifactId>termenu</artifactId>
-  <version>1.0.1</version>
+  <version>1.1.0</version>
 
   <name>termenu</name>
   <url>https://github.com/AugustoRavazoli/termenu</url>
@@ -25,9 +25,9 @@
       <scope>test</scope>
     </dependency>
     <dependency>
-      <groupId>org.mockito</groupId>
-      <artifactId>mockito-core</artifactId>
-      <version>5.3.1</version>
+      <groupId>org.assertj</groupId>
+      <artifactId>assertj-core</artifactId>
+      <version>3.24.2</version>
       <scope>test</scope>
     </dependency>
   </dependencies>

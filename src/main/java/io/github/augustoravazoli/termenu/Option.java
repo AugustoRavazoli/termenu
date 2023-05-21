@@ -10,6 +10,7 @@ import java.lang.annotation.Target;
  * Indicates that an annotated method is an "option". Such methods are used to define an 
  * action to be perfomed when the given option is chosed
  * @author Augusto Ravazoli
+ * @since 1.0.0
  */
 @Inherited
 @Target(METHOD)
@@ -18,13 +19,13 @@ public @interface Option {
 
   /**
    * The number readed from keyboard to map this option
-   * @return number to map to keyboard
+   * @return the number
    */
   int number();
 
   /**
    * The option name to be displayed in the menu
-   * @return name of this option
+   * @return the name
    */
   String name();
 
