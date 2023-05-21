@@ -78,18 +78,18 @@ In the main class
 ```
 
 The terminal output
-```bash
+```console
   Menu
   1 - Greetings
   2 - Exit
-  1 # readed from keyboard
+  1
   What's your name?
-  Joe # readed from keyboard
+  Joe
   Greetings Joe
   Menu
   1 - Greetings
   2 - Exit
-  2 # readed from keyboard
+  2
   Exiting...
 ```
 
