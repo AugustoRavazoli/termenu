@@ -23,12 +23,6 @@ Go to the project directory
   cd termenu
 ```
 
-Package the project
-
-```bash
-  mvn package
-```
-
 Install the package in the local maven repository
 ```bash
   mvn install
