@@ -8,7 +8,7 @@ import java.lang.annotation.Target;
 
 /**
  * Indicates that an annotated method is an "option". Such methods are used to define an 
- * action to be perfomed when the given option is chosed
+ * action to be performed when the given option is chose.
  * @author Augusto Ravazoli
  * @since 1.0.0
  */
@@ -18,7 +18,7 @@ import java.lang.annotation.Target;
 public @interface Option {
 
   /**
-   * The number readed from keyboard to map this option
+   * The number read from keyboard to map this option
    * @return the number
    */
   int number();

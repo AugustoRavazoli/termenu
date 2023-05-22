@@ -23,26 +23,26 @@ public @interface Header {
   String title();
 
   /**
-   * How options will be formated in the menu
+   * How options will be formatted in the menu
    * @return the format
    */
   String format() default "%d - %s\n";
 
   /**
-   * The message to be displayed when an invalid option is chosed
+   * The message to be displayed when an invalid option is chose
    * @return the error message
    */
   String invalidOptionErrorMessage() default "Invalid option, try again";
 
   /**
-   * The message to be displayed when an invalid token is readed from keyboard if an integer is expected
+   * The message to be displayed when an invalid token is read from keyboard if an integer is expected
    * @return the error message
    */
   String invalidIntErrorMessage() default "That's not an integer";
 
 
   /**
-   * The message to be displayed when an invalid token is readed from keyboard if a double is expected
+   * The message to be displayed when an invalid token is read from keyboard if a double is expected
    * @return the error message
    */
   String invalidDoubleErrorMessage() default "That's not a double";

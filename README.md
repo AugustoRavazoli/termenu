@@ -25,15 +25,15 @@ Go to the project directory
 
 Install the package in the local maven repository
 ```bash
-  mvn install
+  mvn install -DperformRelease=true
 ```
 
-Add the dependency to your `pom.xml` file
+Add the dependency to the `pom.xml` file of your project
 ```xml
   <dependency>
-    <groupId>io.github.augustoravazoli.termenu</groupId>
+    <groupId>io.github.augustoravazoli</groupId>
     <artifactId>termenu</artifactId>
-    <version>1.1.0</version>
+    <version>1.1.1</version>
   </dependency>
 ```
 

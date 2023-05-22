@@ -4,9 +4,9 @@
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
-  <groupId>io.github.augustoravazoli.termenu</groupId>
+  <groupId>io.github.augustoravazoli</groupId>
   <artifactId>termenu</artifactId>
-  <version>1.1.0</version>
+  <version>1.1.1</version>
 
   <name>termenu</name>
   <url>https://github.com/AugustoRavazoli/termenu</url>
@@ -70,6 +70,10 @@
         <plugin>
           <artifactId>maven-project-info-reports-plugin</artifactId>
           <version>3.0.0</version>
+        </plugin>
+        <plugin>
+          <artifactId>maven-source-plugin</artifactId>
+          <version>3.3.0</version>
         </plugin>
         <plugin>
           <artifactId>maven-javadoc-plugin</artifactId>

@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Scanner;
 
 /**
- * A menu should extend this class to work through the {@link #run() Run} method. 
+ * A menu should extend this class to work through the {@link #run()} method. 
  * This class also provides utilities methods to perform terminal I/O.
  * @author Augusto Ravazoli
  * @since 1.0.0
@@ -110,7 +110,7 @@ public abstract class AbstractMenu {
   }
 
   /**
-   * A helper method to display a formated message
+   * A helper method to display a formatted message
    * @param format - the format
    * @param args - the objects
    */
