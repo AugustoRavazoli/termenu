@@ -7,7 +7,7 @@ import java.lang.annotation.Inherited;
 import java.lang.annotation.Target;
 
 /**
- * Indicates that an annotated class is a "menu".
+ * An annotation to add configurations to a menu
  * @author Augusto Ravazoli
  * @since 1.0.0
  */
@@ -29,6 +29,12 @@ public @interface Header {
   String format() default "%d - %s\n";
 
   /**
+   * If the terminal should be cleared automatically after an option is chose and executed
+   * @return a boolean
+   */
+  boolean clearTerminalAutomatically() default true;
+
+  /**
    * The message to be displayed when an invalid option is chose
    * @return the error message
    */
@@ -39,7 +45,6 @@ public @interface Header {
    * @return the error message
    */
   String invalidIntErrorMessage() default "That's not an integer";
-
 
   /**
    * The message to be displayed when an invalid token is read from keyboard if a double is expected

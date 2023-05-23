@@ -48,9 +48,6 @@ class MenuTest {
       1 - Greetings
       2 - Exit
       Invalid option, try again 
-      Menu
-      1 - Greetings
-      2 - Exit
       Exiting...
       """
     );

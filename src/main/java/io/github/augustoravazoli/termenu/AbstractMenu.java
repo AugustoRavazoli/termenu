@@ -1,5 +1,6 @@
 package io.github.augustoravazoli.termenu;
 
+import java.io.IOException;
 import java.io.PrintStream;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -8,8 +9,7 @@ import java.util.List;
 import java.util.Scanner;
 
 /**
- * A menu should extend this class to work through the {@link #run()} method. 
- * This class also provides utilities methods to perform terminal I/O.
+ * A base class to create menus, it also provides utilities methods to perform I/O.
  * @author Augusto Ravazoli
  * @since 1.0.0
  */
@@ -21,7 +21,7 @@ public abstract class AbstractMenu {
   private final Scanner input;
   private final PrintStream output;
   private final Header header;
-  private final List<Method> actions;
+  private final List<Method> methods;
   private boolean exited;
 
   /**
@@ -39,14 +39,14 @@ public abstract class AbstractMenu {
     this.input = input;
     this.output = output;
     this.header = getClass().getAnnotation(Header.class);
-    this.actions = getActions();
+    this.methods = getMethods();
   }
 
-  private List<Method> getActions() {
+  private List<Method> getMethods() {
     return Arrays
       .stream(getClass().getDeclaredMethods())
-      .filter(method -> method.isAnnotationPresent(Option.class))
-      .peek(method -> method.setAccessible(true))
+      .filter(m -> m.isAnnotationPresent(Option.class))
+      .peek(m -> m.setAccessible(true))
       .sorted((m1, m2) -> Integer.compare(
         m1.getAnnotation(Option.class).number(),
         m2.getAnnotation(Option.class).number()
@@ -67,30 +67,45 @@ public abstract class AbstractMenu {
 
   private void listOptions() {
     output.println(header.title());
-    for (var action : actions) {
-      var option = action.getAnnotation(Option.class);
+    for (var method : methods) {
+      var option = method.getAnnotation(Option.class);
       output.printf(header.format(), option.number(), option.name());
     }
   }
 
   private void chooseOption() {
-    checkInt();
-    var choice = input.nextInt();
-    actions
-      .stream()
-      .filter(action -> action.getAnnotation(Option.class).number() == choice)
-      .findFirst()
-      .ifPresentOrElse(
-        action -> invoke(action),
-        () -> output.println(header.invalidOptionErrorMessage())
-      );
+    while (true) {
+      var choice = askForInt("");
+      var method = methods
+        .stream()
+        .filter(m -> m.getAnnotation(Option.class).number() == choice)
+        .findFirst()
+        .orElse(null);
+      if (method != null) {
+        execute(method);
+        break;
+      }
+      output.println(header.invalidOptionErrorMessage());
+    }
   }
 
-  private void invoke(Method method) {
+  private void execute(Method method) {
+    if (!header.clearTerminalAutomatically()) {
+      executeHelper(method);
+      return;
+    }
+    clear();
+    executeHelper(method);
+    if (!method.getName().equals("exit")) {
+      clear();
+    }
+  }
+
+  private void executeHelper(Method method) {
     try {
       method.invoke(this);
     } catch (InvocationTargetException | IllegalAccessException ex) {
-      throw new IllegalStateException(ex);
+      throw new UnsupportedOperationException(ex);
     }
   }
 
@@ -99,6 +114,22 @@ public abstract class AbstractMenu {
    */
   protected void exit() {
     exited = true;
+  }
+
+  /**
+   * Clear the terminal output
+   */
+  protected final void clear() {
+    try {
+      var osIsWindows = System.getProperty("os.name").contains("Windows");
+      var commands = osIsWindows ? List.of("cmd", "/c", "cls") : List.of("clear");
+      new ProcessBuilder(commands)
+        .inheritIO()
+        .start()
+        .waitFor();
+    } catch (InterruptedException | IOException ex) {
+      throw new UnsupportedOperationException(ex);
+    }
   }
 
   /**
@@ -126,7 +157,9 @@ public abstract class AbstractMenu {
   protected int askForInt(String message) {
     output.print(message);
     checkInt();
-    return input.nextInt();
+    var number = input.nextInt();
+    input.nextLine();
+    return number;
   }
 
   private void checkInt() {
@@ -144,7 +177,9 @@ public abstract class AbstractMenu {
   protected double askForDouble(String message) {
     output.print(message);
     checkDouble();
-    return input.nextDouble();
+    var number = input.nextDouble();
+    input.nextLine();
+    return number;
   }
 
   private void checkDouble() {
@@ -155,17 +190,19 @@ public abstract class AbstractMenu {
   }
 
   /**
-   * A helper method to display a message and return a string from the keyboard
+   * A helper method to display a message and return a word from the keyboard
    * @param message - the message to display
-   * @return a string
+   * @return a word
    */
   protected String askForWord(String message) {
     output.print(message);
-    return input.next();
+    var word = input.next();
+    input.nextLine();
+    return word;
   }
 
   /**
-   * A helper method to display a message and return a string line from the keyboard
+   * A helper method to display a message and return a line from the keyboard
    * @param message - the message to display
    * @return a line
    */
