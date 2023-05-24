@@ -39,7 +39,7 @@ Add the dependency to the `pom.xml` file of your project
 
 ### Usage
 
-Create a class exteding `AbstractMenu` and mark it with `Header` and `Option` annotations
+Create a class exteding `AbstractMenu` and mark it with `Title` and `Option` annotations
 ```java
   @Title("Menu") // Set the menu's title
   class Menu extends AbstractMenu {
