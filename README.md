@@ -33,7 +33,7 @@ Add the dependency to the `pom.xml` file of your project
   <dependency>
     <groupId>io.github.augustoravazoli</groupId>
     <artifactId>termenu</artifactId>
-    <version>1.2.0</version>
+    <version>2.0.0</version>
   </dependency>
 ```
 
@@ -41,7 +41,7 @@ Add the dependency to the `pom.xml` file of your project
 
 Create a class exteding `AbstractMenu` and mark it with `Header` and `Option` annotations
 ```java
-  @Header(title = "Menu", clearTerminalAutomatically = false) // Set the menu's title
+  @Title("Menu") // Set the menu's title
   class Menu extends AbstractMenu {
  
     @Option(number = 1, name = "Greetings") // Add an option

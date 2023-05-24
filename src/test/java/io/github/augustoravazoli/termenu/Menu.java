@@ -3,7 +3,7 @@ package io.github.augustoravazoli.termenu;
 import java.io.PrintStream;
 import java.util.Scanner;
 
-@Header(title = "Menu", clearTerminalAutomatically = false)
+@Title("Menu")
 class Menu extends AbstractMenu {
 
   Menu(Scanner input, PrintStream output) {

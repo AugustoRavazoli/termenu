@@ -47,7 +47,7 @@ class MenuTest {
       Menu
       1 - Greetings
       2 - Exit
-      Invalid option, try again 
+      Invalid option
       Exiting...
       """
     );
@@ -65,7 +65,7 @@ class MenuTest {
     assertThat(output.toString()).isEqualTo(
       """
       Enter an integer:
-      That's not an integer
+      That's not a valid integer
       """
     );
     assertThat(number).isEqualTo(2);
@@ -83,7 +83,7 @@ class MenuTest {
     assertThat(output.toString()).isEqualTo(
       """
       Enter a double:
-      That's not a double
+      That's not a valid double
       """
     );
     assertThat(number).isEqualTo(2);

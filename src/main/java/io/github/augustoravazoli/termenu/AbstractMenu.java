@@ -13,6 +13,14 @@ import java.util.Scanner;
  * @author Augusto Ravazoli
  * @since 1.0.0
  */
+@Configuration(
+  format = "%d - %s",
+  clearTerminalAutomatically = false,
+  chooseOptionMessage = "",
+  invalidOptionMessage = "Invalid option",
+  invalidIntMessage = "That's not a valid integer",
+  invalidDoubleMessage = "That's not a valid double"
+)
 public abstract class AbstractMenu {
 
   private static final Scanner DEFAULT_INPUT = new Scanner(System.in);
@@ -20,25 +28,25 @@ public abstract class AbstractMenu {
 
   private final Scanner input;
   private final PrintStream output;
-  private final Header header;
+  private final Configuration configuration;
   private final List<Method> methods;
   private boolean exited;
 
   /**
-   * Constructs an abstract menu
-   * @throws IllegalStateException if {@link io.github.augustoravazoli.termenu.Header} annotation is missing
+   * Constructs an abstract menu.
+   * @throws IllegalStateException if {@link io.github.augustoravazoli.termenu.Title} annotation is missing
    */
   protected AbstractMenu() {
     this(DEFAULT_INPUT, DEFAULT_OUTPUT);
   }
 
   AbstractMenu(Scanner input, PrintStream output) {
-    if (!getClass().isAnnotationPresent(Header.class)) {
-      throw new IllegalStateException("Missing Header annotation");
+    if (!getClass().isAnnotationPresent(Title.class)) {
+      throw new IllegalStateException("Missing Title annotation");
     }
     this.input = input;
     this.output = output;
-    this.header = getClass().getAnnotation(Header.class);
+    this.configuration = getClass().getAnnotation(Configuration.class);
     this.methods = getMethods();
   }
 
@@ -55,7 +63,7 @@ public abstract class AbstractMenu {
   }
 
   /**
-   * Starts the menu and waits for keyboard input to execute an option
+   * Starts the menu and waits for keyboard input to execute an option.
    */
   public final void run() {
     exited = false;
@@ -66,16 +74,17 @@ public abstract class AbstractMenu {
   }
 
   private void listOptions() {
-    output.println(header.title());
+    var title = getClass().getAnnotation(Title.class).value();
+    output.println(title);
     for (var method : methods) {
       var option = method.getAnnotation(Option.class);
-      output.printf(header.format(), option.number(), option.name());
+      output.printf(configuration.format() + "\n", option.number(), option.name());
     }
   }
 
   private void chooseOption() {
     while (true) {
-      var choice = askForInt("");
+      var choice = askForInt(configuration.chooseOptionMessage());
       var method = methods
         .stream()
         .filter(m -> m.getAnnotation(Option.class).number() == choice)
@@ -85,12 +94,12 @@ public abstract class AbstractMenu {
         execute(method);
         break;
       }
-      output.println(header.invalidOptionErrorMessage());
+      output.println(configuration.invalidOptionMessage());
     }
   }
 
   private void execute(Method method) {
-    if (!header.clearTerminalAutomatically()) {
+    if (!configuration.clearTerminalAutomatically()) {
       executeHelper(method);
       return;
     }
@@ -110,14 +119,14 @@ public abstract class AbstractMenu {
   }
 
   /**
-   * The action to exit this menu
+   * The action to exit this menu.
    */
   protected void exit() {
     exited = true;
   }
 
   /**
-   * Clear the terminal output
+   * Clear the terminal output.
    */
   protected final void clear() {
     try {
@@ -133,25 +142,25 @@ public abstract class AbstractMenu {
   }
 
   /**
-   * A helper method to display a message
-   * @param message - the message
+   * A helper method to display a message.
+   * @param message the message
    */
   protected void print(String message) {
     output.print(message);
   }
 
   /**
-   * A helper method to display a formatted message
-   * @param format - the format
-   * @param args - the objects
+   * A helper method to display a formatted message.
+   * @param format the format
+   * @param args the objects
    */
   protected void printf(String format, Object... args) {
     output.printf(format, args);
   }
 
   /**
-   * A helper method to display a message and return an integer from keyboard
-   * @param message - the message to display
+   * A helper method to display a message and return an integer from keyboard.
+   * @param message the message to display
    * @return an integer
    */
   protected int askForInt(String message) {
@@ -164,14 +173,14 @@ public abstract class AbstractMenu {
 
   private void checkInt() {
     while (!input.hasNextInt()) {
-      output.println(header.invalidIntErrorMessage());
+      output.println(configuration.invalidIntMessage());
       input.next();
     }
   }
 
   /**
-   * A helper method to display a message and return a double from keyboard
-   * @param message - the message to display
+   * A helper method to display a message and return a double from keyboard.
+   * @param message the message to display
    * @return a double
    */
   protected double askForDouble(String message) {
@@ -184,14 +193,14 @@ public abstract class AbstractMenu {
 
   private void checkDouble() {
     while (!input.hasNextDouble()) {
-      output.println(header.invalidDoubleErrorMessage());
+      output.println(configuration.invalidDoubleMessage());
       input.next();
     }
   }
 
   /**
-   * A helper method to display a message and return a word from the keyboard
-   * @param message - the message to display
+   * A helper method to display a message and return a word from the keyboard.
+   * @param message the message to display
    * @return a word
    */
   protected String askForWord(String message) {
@@ -202,8 +211,8 @@ public abstract class AbstractMenu {
   }
 
   /**
-   * A helper method to display a message and return a line from the keyboard
-   * @param message - the message to display
+   * A helper method to display a message and return a line from the keyboard.
+   * @param message the message to display
    * @return a line
    */
   protected String askForPhrase(String message) {
