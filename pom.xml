@@ -6,7 +6,7 @@
 
   <groupId>io.github.augustoravazoli</groupId>
   <artifactId>termenu</artifactId>
-  <version>2.0.0</version>
+  <version>3.0.0</version>
 
   <name>termenu</name>
   <url>https://github.com/AugustoRavazoli/termenu</url>
@@ -21,7 +21,19 @@
     <dependency>
       <groupId>org.junit.jupiter</groupId>
       <artifactId>junit-jupiter-engine</artifactId>
-      <version>5.9.1</version>
+      <version>5.9.2</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.junit.jupiter</groupId>
+      <artifactId>junit-jupiter-params</artifactId>
+      <version>5.9.2</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.mockito</groupId>
+      <artifactId>mockito-core</artifactId>
+      <version>5.4.0</version>
       <scope>test</scope>
     </dependency>
     <dependency>

@@ -1,12 +1,12 @@
 # Termenu
 
-A simple library to develop interactive menus on terminal using Java.
+A simple framework to develop interactive menus on terminal using Java.
 
 ## Getting Started
 
 ### Prerequisites
 
-* Java 17+
+* Java 17
 * Maven
 
 ### Installing
@@ -25,7 +25,7 @@ Go to the project directory
 
 Install the package in the local maven repository
 ```bash
-  mvn install -DperformRelease=true
+  mvn install
 ```
 
 Add the dependency to the `pom.xml` file of your project
@@ -33,28 +33,28 @@ Add the dependency to the `pom.xml` file of your project
   <dependency>
     <groupId>io.github.augustoravazoli</groupId>
     <artifactId>termenu</artifactId>
-    <version>2.0.0</version>
+    <version>3.0.0</version>
   </dependency>
 ```
 
 ### Usage
 
-Create a class exteding `AbstractMenu` and mark it with `Title` and `Option` annotations
+Create a class exteding `Menu` and mark it with `Title` and `Option` annotations
 ```java
-  @Title("Menu") // Set the menu's title
-  class Menu extends AbstractMenu {
+  @Title("Greetings Menu") // Sets the menu's title
+  public class GreetingsMenu extends Menu { // Extends the base menu
  
-    @Option(number = 1, name = "Greetings") // Add an option
-    private void greetings() {
-      var name = askForWord("What's your name?\n");
-      printf("Greetings %s\n", name);
+    @Option(number = 1, name = "Greetings") // Adds an option
+    protected void greetings() {
+      var name = ask("What's your name?", String.class); // Displays a message and return a string
+      say("Greetings %s", name); // Displays a message
     }
 
-    @Option(number = 2, name = "Exit") // Use the inherited exit method to exit this menu
+    @Option(number = 2, name = "Exit")
     @Override
     protected void exit() {
-      super.exit();
-      print("Exiting...\n");
+      super.exit(); // Use the inherited exit method to exit this menu
+      say("Exiting...");
     }
 
   }
@@ -65,7 +65,7 @@ In the main class
   public class Main {
 
     public static void main(String[] args) {
-      new Menu().run();
+      new GreetingsMenu().run(); // Calls the run method to start the menu
     }
 
   }
@@ -73,17 +73,19 @@ In the main class
 
 The terminal output
 ```console
-  Menu
-  1 - Greetings
-  2 - Exit
-  1
+  ---- Greetings Menu ----
+  1  Greetings
+  2  Exit
+  ------------------------
+  > 1
   What's your name?
-  Joe
+  > Joe
   Greetings Joe
-  Menu
-  1 - Greetings
-  2 - Exit
-  2
+  ---- Greetings Menu ----
+  1  Greetings
+  2  Exit
+  ------------------------
+  > 2
   Exiting...
 ```
 
