@@ -1,1 +1,3 @@
-io.github.augustoravazoli.termenu
+io.github.augustoravazoli.termenu.core
+io.github.augustoravazoli.termenu.io
+io.github.augustoravazoli.termenu.util

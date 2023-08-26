@@ -1,1 +1,1 @@
-packageSearchIndex = [{"l":"All Packages","u":"allpackages-index.html"},{"l":"io.github.augustoravazoli.termenu"}];updateSearchResults();
+packageSearchIndex = [{"l":"All Packages","u":"allpackages-index.html"},{"l":"io.github.augustoravazoli.termenu.core"},{"l":"io.github.augustoravazoli.termenu.io"},{"l":"io.github.augustoravazoli.termenu.util"}];updateSearchResults();
