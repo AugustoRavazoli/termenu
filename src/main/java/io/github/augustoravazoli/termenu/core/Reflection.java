@@ -21,7 +21,7 @@ final class Reflection {
 
   static String getTitle(Class<? extends Menu> clazz) {
     if (!clazz.isAnnotationPresent(Title.class)) {
-      throw new IllegalArgumentException("The provided class should have the Menu annotation");
+      throw new IllegalArgumentException("Missing menu's title");
     }
     return clazz.getAnnotation(Title.class).value();
   }

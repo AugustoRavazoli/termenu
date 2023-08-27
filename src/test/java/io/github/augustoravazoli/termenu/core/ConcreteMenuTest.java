@@ -62,7 +62,7 @@ class ConcreteMenuTest {
   }
 
   @Test
-  @DisplayName("execute selected option")
+  @DisplayName("Execute selected option")
   void executeSelectedOption() {
     // given
     when(terminal.readInteger()).thenReturn(2, 3);

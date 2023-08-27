@@ -61,10 +61,7 @@ final class NativeTerminal extends Terminal {
     try {
       var windows = System.getProperty("os.name").contains("Windows");
       var commands = windows ? List.of("cmd", "/c", "cls") : List.of("clear");
-      new ProcessBuilder(commands)
-        .inheritIO()
-        .start()
-        .waitFor();
+      new ProcessBuilder(commands).inheritIO().start().waitFor();
       return true;
     } catch (InterruptedException | IOException ex) {
       return false;

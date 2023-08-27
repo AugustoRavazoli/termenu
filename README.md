@@ -33,7 +33,7 @@ Add the dependency to the `pom.xml` file of your project
   <dependency>
     <groupId>io.github.augustoravazoli</groupId>
     <artifactId>termenu</artifactId>
-    <version>3.0.0</version>
+    <version>3.0.1</version>
   </dependency>
 ```
 
@@ -93,6 +93,15 @@ The terminal output
 
 You can check the API documentation [here](https://augustoravazoli.github.io/termenu/apidocs).
 
+## Contributing
+
+To contribute to Termenu, open a issue or a pull-request. 
+
 ## License
 
 This project is licensed under the MIT License - see the LICENSE file for details
+
+## Warning
+
+This framework is a small project of mine for learning purposes, this is why it isn't available on 
+maven central repository. It's a bit unstable and can suffer weird changes at random time.
