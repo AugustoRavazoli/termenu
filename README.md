@@ -33,7 +33,7 @@ Add the dependency to the `pom.xml` file of your project
   <dependency>
     <groupId>io.github.augustoravazoli</groupId>
     <artifactId>termenu</artifactId>
-    <version>3.0.1</version>
+    <version>3.0.2</version>
   </dependency>
 ```
 
@@ -59,6 +59,7 @@ Create a class exteding `Menu` and mark it with `Title` and `Option` annotations
 
   }
 ```
+`ask` and `say` are static imports from `Comunicator` class.
 
 In the main class
 ```java

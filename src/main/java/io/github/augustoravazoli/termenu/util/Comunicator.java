@@ -52,4 +52,13 @@ public final class Comunicator {
     Terminal.getInstance().writeLine(format, args);
   }
 
+  /**
+   * Displays an object.
+   *
+   * @param object the object
+   */
+  public static void say(Object object) {
+    Terminal.getInstance().writeLine(object.toString());
+  }
+
 }
